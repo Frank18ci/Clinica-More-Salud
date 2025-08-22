@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<div th:fragment="navbar">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+                    <span class="navbar-text fs-4">
+                        Clínica MoreSalud
+                    </span>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+
+          <!-- para administrador -->
+          <div class="d-flex flex-sm-column flex-md-row" sec:authorize="hasRole('ADMINISTRADOR')">
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/security/index}">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/medico/listar}">Médicos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/paciente/listar}">Pacientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/atencion/listar}">Atencion</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/historialMedico/listar}">Historial Medico</a>
+            </li>
+          </div>
+          <!-- para medico -->
+          <div class="d-flex flex-sm-column flex-md-row" sec:authorize="hasRole('MEDICO')">
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/paciente/listar}">Pacientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/atencion/listar}">Atenciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/historialMedico/listar}">Historial Médico</a>
+            </li>
+          </div>
+
+          <!--  para recepcionista -->
+          <div class="d-flex flex-sm-column flex-md-row" sec:authorize="hasRole('RECEPCIONISTA')">
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/paciente/listar}">Pacientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/atencion/listar}">Atenciones</a>
+            </li>
+          </div>
+
+          <div class="btn-group dropstart">
+            <button type="button" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+              Extras
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" th:href="@{/alergia/listar}">Alergia</a></li>
+              <li><a class="dropdown-item" th:href="@{/radiografia/listar}">Radiografia</a></li>
+              <li><a class="dropdown-item" th:href="@{/tratamientoMedico/listar}">Tratamiento
+                Medico</a></li>
+              <li>
+                <form th:action="@{/security/logout}" method="post">
+                  <button class="dropdown-item">Cerrar Sesión</button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+</body>
+</html>
